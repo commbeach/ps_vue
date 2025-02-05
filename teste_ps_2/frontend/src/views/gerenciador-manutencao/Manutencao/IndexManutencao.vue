@@ -37,8 +37,8 @@
             </v-dialog>
           </template>
           <template v-slot:item.actions="{ item }">
-          <v-icon class="mdi mdi-eye me-2" color="primary" size="small" @click="goToDetail(item.Id)" name="detailsList"/>
-            <v-icon color="primary" size="small" class="me-2" @click="editItem(item.Id)">
+          <v-icon class="mdi mdi-eye me-2" color="primary" size="small" @click="goToDetail(item.id)" name="detailsList"/>
+            <v-icon color="primary" size="small" class="me-2" @click="editItem(item.id)">
               mdi-pencil
             </v-icon>
             <v-icon color="error" size="small" @click="confirmDeleteItem(item)">
@@ -74,9 +74,10 @@ const router = useRouter();
 const dialogDelete = ref(false);
 const headers = ref([
 
-  { title: 'tipo', sortable: false, key: 'Tipo' },
-  { title: 'recorrencia', sortable: false, key: 'Recorrencia' },
-  { title: 'status', sortable: false, key: 'Status' },
+  { title: 'ID', sortable: false, key: 'id' },
+  { title: 'Tipo', sortable: false, key: 'tipo' },
+  { title: 'Recorrencia', sortable: false, key: 'recorrencia' },
+  { title: 'Status', sortable: false, key: 'status' },
 
   { title: 'Ações', key: 'actions' }
 ]);
@@ -90,13 +91,13 @@ const search = ref('');
 
 interface ManutencaoInterface {
 
-Tipo: string;
-Recorrencia: string;
-Status: string;
+tipo: string;
+recorrencia: string;
+status: string;
 }
 
 interface itemToDeleteInterface {
-  Id: string;
+  id: string;
 }
 
 const formTitle = computed(() => {
@@ -110,11 +111,11 @@ onMounted(() => {
 const getPosts = async () => {
   try {
     const data = await list();
-    data.value.forEach((element: any) => {
+    data.forEach((element: any) => {
       element.Data = dayjs(element.Data).format('DD/MM/YYYY');
     });
-    Manutencao.value = data.value;
-    filteredManutencao.value = data.value;
+    Manutencao.value = data;
+    filteredManutencao.value = data;
   } catch (error) {
     console.error('Error fetching:', error);
   }
@@ -123,7 +124,7 @@ const getPosts = async () => {
 const deleteItem = async () => {
   if (itemToDelete.value) {
     try {
-      await remove(itemToDelete.value.Id);
+      await remove(itemToDelete.value.id);
       Swal.fire({
         title: "Deletado com sucesso!",
         icon: "success",

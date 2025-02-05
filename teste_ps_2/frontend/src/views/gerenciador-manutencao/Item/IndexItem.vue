@@ -99,8 +99,9 @@ quantidade: string;
 }
 
 interface itemToDeleteInterface {
- 
+  id: string;
 }
+
 
 const formTitle = computed(() => {
   return editedIndex.value === -1 ? 'New Item' : 'Edit Item';

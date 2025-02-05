@@ -1,7 +1,7 @@
 <template>
 <v-row justify="end" class="pa-3">
 <v-btn color="error" class="ma-2" variant="outlined" @click="confirmDelete" name="DeleteButton">Excluir Manutencao</v-btn>
-<v-btn color="primary" class="ma-2" @click="editaManutencao(form.Id)" name="EditButton">Editar Manutencao</v-btn>
+<v-btn color="primary" class="ma-2" @click="editaManutencao(form.id)" name="EditButton">Editar Manutencao</v-btn>
 </v-row>
     <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
     <form @submit.prevent="onSubmit">
@@ -10,16 +10,20 @@
                 <v-row >
 
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">tipo</v-label>
-                        <VTextField  type="text" placeholder="tipo string" hide-details v-model='form.Tipo' disabled name="Tipo"></VTextField>
+                        <v-label class="font-weight-medium mb-2">Tipo</v-label>
+                        <VTextField  type="text" placeholder="tipo string" hide-details v-model='form.tipo' disabled name="Tipo"></VTextField>
                     </v-col>
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">recorrencia</v-label>
-                        <VTextField  type="number" placeholder="recorrencia integer" hide-details v-model='form.Recorrencia' disabled name="Recorrencia"></VTextField>
+                        <v-label class="font-weight-medium mb-2">Recorrência</v-label>
+                        <VTextField  type="number" placeholder="recorrencia integer" hide-details v-model='form.recorrencia' disabled name="Recorrencia"></VTextField>
                     </v-col>
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">status</v-label>
-                        <VTextField  type="text" placeholder="status string" hide-details v-model='form.Status' disabled name="Status"></VTextField>
+                        <v-label class="font-weight-medium mb-2">Status</v-label>
+                        <VTextField  type="text" placeholder="status string" hide-details v-model='form.status' disabled name="status"></VTextField>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-label class="font-weight-medium mb-2">Itens</v-label>
+                        <VTextField  type="text" placeholder="status string" hide-details v-model='form.itens[0]["tipo"]' disabled name="status"></VTextField>
                     </v-col>
 
                 </v-row>
@@ -60,9 +64,10 @@ const dialogDelete = ref(false);
 
 const form = reactive({
     id: '',
-    Tipo: '',
-    Recorrencia: '',
-    Status: ''
+    tipo: '',
+    recorrencia: '',
+    status: '',
+    itens:''
 });
 
 
@@ -76,9 +81,11 @@ const verificaArrayParams = () => {
 };
 
 const getPost = async (id: any) => {
+    console.log(id);
     try {
         let response = await getById(id);
-        Object.assign(form, response.value[0]);
+        Object.assign(form, response);
+        console.log(form);
 
 
     } catch (error) {
@@ -90,6 +97,7 @@ const getPost = async (id: any) => {
 const page = ref({ title: 'Detalhes Manutencao' });
 
 onMounted(async () => {
+    //console.log(params)
     if (params.id) {
         await getPost(params.id);
         page.value.title = 'Detalhes Manutencao';
@@ -127,7 +135,7 @@ function confirmDelete() {
 
 const deletaManutencao = async () => {
     try {
-        await remove(form.Id);
+        await remove(form.id);
         Swal.fire({
         title: "Deletado com sucesso!",
         icon: "success",
