@@ -22,10 +22,31 @@
                         <VTextField  type="text" placeholder="status string" hide-details v-model='form.status' disabled name="status"></VTextField>
                     </v-col>
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">Itens</v-label>
-                        <VTextField  type="text" placeholder="status string" hide-details v-model='form.itens[0]["tipo"]' disabled name="status"></VTextField>
+                        <v-label class="font-weight-medium mb-2">Itens</v-label>     
+                        <!-- //form.itens[0]["tipo"]                  -->
+                        <!-- <VTextField  type="text" placeholder="status string" hide-details v-model='form.itens' disabled name="status"></VTextField> -->
+                        <v-data-table class="border rounded-md" :headers="headers" :items="listaItens" >
+                            <template v-slot:bottom> </template>
+                            <template v-slot:top>
+                                <v-row>
+                                    <v-col class="d-flex justify-end">
+                                    </v-col>
+                                </v-row>      
+                            </template>
+                            <template v-slot:item.actions="{ item }">
+                                <v-icon class="mdi mdi-eye me-2" color="primary" size="small" @click="goToDetail(item.id)" name="detailsList"/>
+                                    <v-icon color="primary" size="small" class="me-2" @click="editItem(item.id)">
+                                        mdi-pencil
+                                    </v-icon>
+                                <v-icon color="error" size="small" @click="confirmDeleteItem(item)">
+                                    mdi-delete
+                                </v-icon>
+                            </template>
+                            <template v-slot:no-data>
+                                <v-label>Sem dados!</v-label>
+                            </template>
+                        </v-data-table>                      
                     </v-col>
-
                 </v-row>
             </v-card-text>
         </v-card>
@@ -61,6 +82,18 @@ const params = route.params;
 const router = useRouter();
 const dialogDelete = ref(false);
 
+const headers = ref([
+
+  { title: 'ID', sortable: false, key: 'id' },
+  { title: 'Tipo', sortable: false, key: 'tipo' },
+  { title: 'Unidade de Medida', sortable: false, key: 'unidadeDeMedida' },
+  { title: 'Descrição', sortable: false, key: 'descricao' },
+  { title: 'Quantidade', sortable: false, key: 'quantidade' },
+
+  { title: 'Ações', key: 'actions' }
+]);
+
+const listaItens = ref([]);
 
 const form = reactive({
     id: '',
@@ -85,6 +118,8 @@ const getPost = async (id: any) => {
     try {
         let response = await getById(id);
         Object.assign(form, response);
+        listaItens.value = form.itens;
+
         console.log(form);
 
 
