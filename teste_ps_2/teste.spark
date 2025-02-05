@@ -1,0 +1,47 @@
+Configuration {
+    software_name: "gerenciador-manutencao"
+    about: "trabalho front end de gerenciador de manutencao"
+    language: python
+}
+
+module Main{
+
+    entity Item{
+        tipo: string
+        UnidadeDeMedida: integer
+        descricao: string
+        quantidade: decimal
+        
+    }
+
+    entity Manutencao{
+        tipo: string
+        recorrencia: integer
+        status: string
+        
+    }
+
+    entity Modelo{
+        tipo: string
+        marca: string
+    }
+    
+    entity Equipamento{
+        tipo: string
+        modelo ManyToOne Modelo
+        HorimetroOuOdometro: integer
+        
+    }
+
+    entity OrdemServico {
+        equipamento ManyToOne Equipamento
+        status: string
+        DataAbertura: datetime
+        DataFinalizacao: datetime
+        manutencao ManyToOne Manutencao
+    }
+    
+
+    
+    
+}
