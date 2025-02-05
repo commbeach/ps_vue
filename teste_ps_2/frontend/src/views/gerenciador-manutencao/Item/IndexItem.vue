@@ -37,8 +37,8 @@
             </v-dialog>
           </template>
           <template v-slot:item.actions="{ item }">
-          <v-icon class="mdi mdi-eye me-2" color="primary" size="small" @click="goToDetail(item.Id)" name="detailsList"/>
-            <v-icon color="primary" size="small" class="me-2" @click="editItem(item.Id)">
+          <v-icon class="mdi mdi-eye me-2" color="primary" size="small" @click="goToDetail(item.id)" name="detailsList"/>
+            <v-icon color="primary" size="small" class="me-2" @click="editItem(item.id)">
               mdi-pencil
             </v-icon>
             <v-icon color="error" size="small" @click="confirmDeleteItem(item)">
@@ -74,10 +74,11 @@ const router = useRouter();
 const dialogDelete = ref(false);
 const headers = ref([
 
-  { title: 'tipo', sortable: false, key: 'Tipo' },
-  { title: 'UnidadeDeMedida', sortable: false, key: 'UnidadeDeMedida' },
-  { title: 'descricao', sortable: false, key: 'Descricao' },
-  { title: 'quantidade', sortable: false, key: 'Quantidade' },
+  { title: 'ID', sortable: false, key: 'id' },
+  { title: 'Tipo', sortable: false, key: 'tipo' },
+  { title: 'Unidade de Medida', sortable: false, key: 'unidadeDeMedida' },
+  { title: 'Descrição', sortable: false, key: 'descricao' },
+  { title: 'Quantidade', sortable: false, key: 'quantidade' },
 
   { title: 'Ações', key: 'actions' }
 ]);
@@ -90,15 +91,15 @@ const itemToDelete = ref<itemToDeleteInterface>();
 const search = ref('');
 
 interface ItemInterface {
-
-Tipo: string;
-UnidadeDeMedida: string;
-Descricao: string;
-Quantidade: string;
+id: string;
+tipo: string;
+unidadeDeMedida: string;
+descricao: string;
+quantidade: string;
 }
 
 interface itemToDeleteInterface {
-  Id: string;
+ 
 }
 
 const formTitle = computed(() => {
@@ -112,20 +113,21 @@ onMounted(() => {
 const getPosts = async () => {
   try {
     const data = await list();
-    data.value.forEach((element: any) => {
+    data.forEach((element: any) => {
       element.Data = dayjs(element.Data).format('DD/MM/YYYY');
     });
-    Item.value = data.value;
-    filteredItem.value = data.value;
+    Item.value = data;
+    filteredItem.value = data;
   } catch (error) {
     console.error('Error fetching:', error);
   }
 };
 
 const deleteItem = async () => {
+  //console.log(itemToDelete.value.id);
   if (itemToDelete.value) {
     try {
-      await remove(itemToDelete.value.Id);
+      await remove(itemToDelete.value.id);
       Swal.fire({
         title: "Deletado com sucesso!",
         icon: "success",
@@ -145,6 +147,7 @@ const deleteItem = async () => {
 };
 
 function confirmDeleteItem(item) {
+  //console.log(item);
   itemToDelete.value = item;
   dialogDelete.value = true;
 }
@@ -158,6 +161,8 @@ function editItem(id: any) {
 }
 
 function goToDetail(id: any) {
+  //console.log("teste id")
+  //console.log(id)
   router.push({ path: `/Item/detailsItem/${id}` });
 }
 

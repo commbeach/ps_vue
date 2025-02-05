@@ -10,20 +10,20 @@
                 <v-row >
 
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">tipo</v-label>
-                        <VTextField  type="text" placeholder="tipo string" hide-details v-model='form.Tipo' disabled name="Tipo"></VTextField>
+                        <v-label class="font-weight-medium mb-2">Tipo</v-label>
+                        <VTextField  type="text" placeholder="tipo string" hide-details v-model='form.tipo' disabled name="Tipo"></VTextField>
                     </v-col>
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">UnidadeDeMedida</v-label>
-                        <VTextField  type="number" placeholder="UnidadeDeMedida integer" hide-details v-model='form.UnidadeDeMedida' disabled name="UnidadeDeMedida"></VTextField>
+                        <v-label class="font-weight-medium mb-2">Unidade de Medida</v-label>
+                        <VTextField  type="number" placeholder="UnidadeDeMedida integer" hide-details v-model='form.unidadeDeMedida' disabled name="UnidadeDeMedida"></VTextField>
                     </v-col>
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">descricao</v-label>
-                        <VTextField  type="text" placeholder="descricao string" hide-details v-model='form.Descricao' disabled name="Descricao"></VTextField>
+                        <v-label class="font-weight-medium mb-2">Descrição</v-label>
+                        <VTextField  type="text" placeholder="descricao string" hide-details v-model='form.descricao' disabled name="Descricao"></VTextField>
                     </v-col>
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">quantidade</v-label>
-                        <VTextField  type="number" placeholder="quantidade decimal" hide-details v-model='form.Quantidade' disabled name="Quantidade"></VTextField>
+                        <v-label class="font-weight-medium mb-2">Quantidade</v-label>
+                        <VTextField  type="number" placeholder="quantidade decimal" hide-details v-model='form.quantidade' disabled name="quantidade"></VTextField>
                     </v-col>
 
                 </v-row>
@@ -64,10 +64,10 @@ const dialogDelete = ref(false);
 
 const form = reactive({
     id: '',
-    Tipo: '',
-    UnidadeDeMedida: '',
-    Descricao: '',
-    Quantidade: ''
+    tipo: '',
+    unidadeDeMedida: '',
+    descricao: '',
+    quantidade: ''
 });
 
 
@@ -81,9 +81,14 @@ const verificaArrayParams = () => {
 };
 
 const getPost = async (id: any) => {
+    console.log(id)
     try {
         let response = await getById(id);
-        Object.assign(form, response.value[0]);
+        console.log(form);
+        console.log(response);
+
+        Object.assign(form, response);
+        console.log(form);
 
 
     } catch (error) {
@@ -95,10 +100,12 @@ const getPost = async (id: any) => {
 const page = ref({ title: 'Detalhes Item' });
 
 onMounted(async () => {
+    //console.log(params)
     if (params.id) {
         await getPost(params.id);
         page.value.title = 'Detalhes Item';
         breadcrumbs.value[1].text = page.value.title;
+        console.log(breadcrumbs.value)
     }
 
 
@@ -132,7 +139,7 @@ function confirmDelete() {
 
 const deletaItem = async () => {
     try {
-        await remove(form.Id);
+        await remove(form.id);
         Swal.fire({
         title: "Deletado com sucesso!",
         icon: "success",

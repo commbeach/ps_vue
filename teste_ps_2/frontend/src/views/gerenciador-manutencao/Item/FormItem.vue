@@ -6,11 +6,11 @@
                 <v-row >
 
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">tipo</v-label>
-                        <VTextField  type="text" placeholder="tipo string" hide-details v-model='form.Tipo' name="tipo"></VTextField>
+                        <v-label class="font-weight-medium mb-2">Tipo</v-label>
+                        <VTextField  type="text" placeholder="tipo string" hide-details v-model='form.tipo' name="tipo"></VTextField>
                     </v-col>
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">UnidadeDeMedida</v-label>
+                        <v-label class="font-weight-medium mb-2">Unidade de Medida</v-label>
                         <VTextField  type="number" placeholder="UnidadeDeMedida integer" hide-details v-model='form.UnidadeDeMedida' name="UnidadeDeMedida"></VTextField>
                     </v-col>
                     <v-col cols="12">
@@ -51,10 +51,10 @@ const router = useRouter();
 
 const form = reactive({
     id: '',
-    Tipo: '',
-    UnidadeDeMedida: '',
-    Descricao: '',
-    Quantidade: ''
+    tipo: '',
+    unidadeDeMedida: '',
+    descricao: '',
+    quantidade: ''
 });
 
 
