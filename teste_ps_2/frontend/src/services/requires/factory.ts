@@ -2,7 +2,7 @@ import api from 'axios'
 import useApi from '../../composition/UseApi'
 
 export default function serviceFactory(apiUrl: string, listUrl?: string) {
-  const { list, post, update, remove, getById } = useApi(apiUrl)
+  const { list, post, update, remove, getById, addItem } = useApi(apiUrl)
 
   let customList
 
@@ -18,6 +18,7 @@ export default function serviceFactory(apiUrl: string, listUrl?: string) {
     post,
     update,
     remove,
-    getById
+    getById,
+    addItem
   }
 }

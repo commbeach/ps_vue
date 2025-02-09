@@ -31,12 +31,18 @@ export default function useApi(url: string) {
     return data
   }
 
+  const addItem = async (idMan: string, idItem: string) =>{
+    const {data} = await await api.post(`${url}/${idMan}/${idItem}`);
+    return data;
+  }
+
 
   return {
     list,
     post,
     update,
     remove,
-    getById
+    getById,
+    addItem
   }
 }

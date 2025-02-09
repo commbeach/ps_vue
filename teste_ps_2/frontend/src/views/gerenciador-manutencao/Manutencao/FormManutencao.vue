@@ -5,19 +5,12 @@
             <v-card-text class="pa-sm-6 pa-3 pb-sm-6 pb-6">
                 <v-row >
 
+                
                     <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">tipo</v-label>
-                        <VTextField  type="text" placeholder="tipo string" hide-details v-model='form.Tipo' name="tipo"></VTextField>
+                        <v-label class="font-weight-medium mb-2">ID Item</v-label>
+                        <VTextField  type="number" placeholder="recorrencia integer" hide-details v-model='form.idItem' name="recorrencia"></VTextField>
                     </v-col>
-                    <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">recorrencia</v-label>
-                        <VTextField  type="number" placeholder="recorrencia integer" hide-details v-model='form.Recorrencia' name="recorrencia"></VTextField>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-label class="font-weight-medium mb-2">status</v-label>
-                        <VTextField  type="text" placeholder="status string" hide-details v-model='form.Status' name="status"></VTextField>
-                    </v-col>
-
+                  
                     <v-col cols="12" class="d-flex justify-end">
                         <v-btn type="button" color="primary" variant="outlined" class="mr-3" @click='navigateBack' name="NavBackButton">Voltar</v-btn>
                         <v-btn type="submit" color="primary" flat name="SubmitButton">{{ submitButtonText }}</v-btn>
@@ -39,7 +32,7 @@ import ManutencaoService from '../../../services/requires/ManutencaoRequires';
 import dayjs from 'dayjs';
 
 
-const { list, post, getById, update } = ManutencaoService();
+const { list, post, getById, update, addItem } = ManutencaoService();
 const route = useRoute();
 const params = route.params;
 const router = useRouter();
@@ -47,9 +40,7 @@ const router = useRouter();
 
 const form = reactive({
     id: '',
-    Tipo: '',
-    Recorrencia: '',
-    Status: ''
+    idItem: ''
 });
 
 
@@ -79,10 +70,10 @@ const onSubmit = async () => {
 
             form.id = verificaArrayParams()
 
-            await update(form);
+            await addItem(form.id,form.idItem);
         } else {
 
-            await post(form);
+            await addItem(form.id,form.idItem);
         }
         Swal.fire({
             title: "Salvo com sucesso!",
@@ -103,15 +94,15 @@ const onSubmit = async () => {
     }
 };
 
-const page = ref({ title: 'Cadastrar Manutencao' });
-const submitButtonText = ref('Cadastrar Manutencao');
+const page = ref({ title: 'Adicionar Item' });
+const submitButtonText = ref('Adicionar Item');
 
 onMounted(async () => {
     if (params.id) {
         await getPost(params.id);
-        page.value.title = 'Editar Manutencao';
+        page.value.title = 'Adicionar Item';
         breadcrumbs.value[1].text = page.value.title;
-        submitButtonText.value = 'Editar Manutencao';
+        submitButtonText.value = 'Adicionar Item';
     }
 
 
