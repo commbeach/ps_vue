@@ -33,12 +33,12 @@
                                     </v-col>
                                 </v-row>      
                             </template>
-                            <template v-slot:item.actions="{ item }">
-                                <v-icon class="mdi mdi-eye me-2" color="primary" size="small" @click="goToDetail(item.id)" name="detailsList"/>
-                                    <v-icon color="primary" size="small" class="me-2" @click="editItem(item.id)">
+                            <template v-slot:item.actions="">
+                                <v-icon class="mdi mdi-eye me-2" color="primary" size="small" @click="" name="detailsList"/>
+                                    <v-icon color="primary" size="small" class="me-2" @click="">
                                         mdi-pencil
                                     </v-icon>
-                                <v-icon color="error" size="small" @click="confirmDeleteItem(item)">
+                                <v-icon color="error" size="small" @click="">
                                     mdi-delete
                                 </v-icon>
                             </template>
@@ -93,7 +93,7 @@ const headers = ref([
   { title: 'Ações', key: 'actions' }
 ]);
 
-const listaItens = ref([]);
+var listaItens = ref([]);
 
 const form = reactive({
     id: '',

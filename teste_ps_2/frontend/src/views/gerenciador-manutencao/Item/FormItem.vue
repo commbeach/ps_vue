@@ -11,15 +11,15 @@
                     </v-col>
                     <v-col cols="12">
                         <v-label class="font-weight-medium mb-2">Unidade de Medida</v-label>
-                        <VTextField  type="number" placeholder="UnidadeDeMedida integer" hide-details v-model='form.UnidadeDeMedida' name="UnidadeDeMedida"></VTextField>
+                        <VTextField  type="number" placeholder="UnidadeDeMedida integer" hide-details v-model='form.unidadeDeMedida' name="UnidadeDeMedida"></VTextField>
                     </v-col>
                     <v-col cols="12">
                         <v-label class="font-weight-medium mb-2">descricao</v-label>
-                        <VTextField  type="text" placeholder="descricao string" hide-details v-model='form.Descricao' name="descricao"></VTextField>
+                        <VTextField  type="text" placeholder="descricao string" hide-details v-model='form.descricao' name="descricao"></VTextField>
                     </v-col>
                     <v-col cols="12">
                         <v-label class="font-weight-medium mb-2">quantidade</v-label>
-                        <VTextField  type="number" placeholder="quantidade decimal" hide-details v-model='form.Quantidade' name="quantidade"></VTextField>
+                        <VTextField  type="number" placeholder="quantidade decimal" hide-details v-model='form.quantidade' name="quantidade"></VTextField>
                     </v-col>
 
                     <v-col cols="12" class="d-flex justify-end">
